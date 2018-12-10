@@ -1,0 +1,2 @@
+max objectfile s~ send~;
+max objectfile r~ receive~;

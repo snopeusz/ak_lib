@@ -1,0 +1,21 @@
+{
+	"diffuse_model" : "minnaert",
+	"specular_model" : "blinn",
+	"fog" : "none",
+	"params" : 	{
+		"darkness" : 1.12
+	}
+,
+	"textures" : 	{
+
+	}
+,
+	"filename" : "dark.matter.2001.jitmtl",
+	"color" : [ 0.0, 0.570962, 0.898192, 1.0 ],
+	"mat_emission" : [ 0.0, 0.0, 0.0, 1.0 ],
+	"mat_ambient" : [ 0.098039, 0.098039, 0.098039, 1.0 ],
+	"mat_diffuse" : [ 0.2, 0.2, 0.2, 1.0 ],
+	"mat_specular" : [ 0.24458, 0.233754, 0.485506, 1.0 ],
+	"shininess" : [ 69.0 ],
+	"fog_params" : [ 0.5, 0.5, 0.5, 0.0, 1.0, 1.0, 100.0 ]
+}

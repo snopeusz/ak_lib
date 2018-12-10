@@ -1,0 +1,125 @@
+{
+	"patcher" : 	{
+		"fileversion" : 1,
+		"appversion" : 		{
+			"major" : 7,
+			"minor" : 2,
+			"revision" : 3,
+			"architecture" : "x64",
+			"modernui" : 1
+		}
+,
+		"rect" : [ 59.0, 81.0, 841.0, 621.0 ],
+		"editing_bgcolor" : [ 0.9, 0.9, 0.9, 1.0 ],
+		"bglocked" : 0,
+		"openinpresentation" : 0,
+		"default_fontsize" : 12.0,
+		"default_fontface" : 0,
+		"default_fontname" : "Arial",
+		"gridonopen" : 1,
+		"gridsize" : [ 15.0, 15.0 ],
+		"gridsnaponopen" : 1,
+		"objectsnaponopen" : 1,
+		"statusbarvisible" : 2,
+		"toolbarvisible" : 1,
+		"lefttoolbarpinned" : 0,
+		"toptoolbarpinned" : 0,
+		"righttoolbarpinned" : 0,
+		"bottomtoolbarpinned" : 0,
+		"toolbars_unpinned_last_save" : 0,
+		"tallnewobj" : 0,
+		"boxanimatetime" : 200,
+		"enablehscroll" : 1,
+		"enablevscroll" : 1,
+		"devicewidth" : 0.0,
+		"description" : "",
+		"digest" : "",
+		"tags" : "",
+		"style" : "",
+		"subpatcher_template" : "",
+		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-1",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 50.0, 14.0, 30.0, 22.0 ],
+					"style" : "",
+					"text" : "in 1"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-2",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 532.0, 8.0, 30.0, 22.0 ],
+					"style" : "",
+					"text" : "in 2"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"code" : "//-----------------------------------------\n// [code]\r\n// http://www.musicdsp.org/archive.php?classid=3#266\n//-----------------------------------------\n\n//fc -> cutoff frequency\n//pi -> 3.14285714285714\n//srate -> sample rate\nHistory xm1, xm2,xm3, xm4, xm4, ym1, ym2, ym3, ym4;\r\nParam hipass(0);\n\r\nfc = in2;\r\n\n//================================================\n// shared for both lp, hp; optimizations here\n//================================================\nwc=twopi*fc;\nwc2=wc*wc;\nwc3=wc2*wc;\nwc4=wc2*wc2;\nk=wc/tan(pi*fc/SAMPLERATE);\nk2=k*k;\nk3=k2*k;\nk4=k2*k2;\n//sqrt2=sqrt(2);\nsq_tmp1=sqrt2*wc3*k;\nsq_tmp2=sqrt2*wc*k3;\na_tmp=4*wc2*k2+2*sq_tmp1+k4+2*sq_tmp2+wc4;\n\nb1=(4*(wc4+sq_tmp1-k4-sq_tmp2))/a_tmp;\nb2=(6*wc4-8*wc2*k2+6*k4)/a_tmp;\nb3=(4*(wc4-sq_tmp1+sq_tmp2-k4))/a_tmp;\nb4=(k4-2*sq_tmp1+wc4-2*sq_tmp2+4*wc2*k2)/a_tmp;\n\r\na0, a1, a2, a3, a4 = 0;\r\n\nif (hipass == 0) {\n\t//================================================\n\t// low-pass\n\t//================================================\r\n\ta0=wc4/a_tmp;\n\ta1=4*wc4/a_tmp;\n\ta2=6*wc4/a_tmp;\n\ta3=a1;\n\ta4=a0;\n} else {\n\t//=====================================================\n\t// high-pass\n\t//=====================================================\n\ta0=k4/a_tmp;\n\ta1=-4*k4/a_tmp;\n\ta2=6*k4/a_tmp;\n\ta3=a1;\n\ta4=a0;\n}\r\n\n//=====================================================\n// sample loop - same for lp, hp\n//=====================================================\ntempx=in1;\ntempy=a0*tempx+a1*xm1+a2*xm2+a3*xm3+a4*xm4-b1*ym1-b2*ym2-b3*ym3-b4*ym4;\nxm4=xm3;\nxm3=xm2;\nxm2=xm1;\nxm1=tempx;\nym4=ym3;\nym3=ym2;\nym2=ym1;\nym1=tempy;\n\nout1=tempy;",
+					"fontface" : 0,
+					"fontname" : "Arial",
+					"fontsize" : 12.0,
+					"id" : "obj-3",
+					"maxclass" : "codebox",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 50.0, 42.0, 501.0, 510.0 ],
+					"style" : ""
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-4",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 50.0, 558.0, 37.0, 22.0 ],
+					"style" : "",
+					"text" : "out 1"
+				}
+
+			}
+ ],
+		"lines" : [ 			{
+				"patchline" : 				{
+					"destination" : [ "obj-3", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-1", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-3", 1 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-2", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-4", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-3", 0 ]
+				}
+
+			}
+ ]
+	}
+
+}

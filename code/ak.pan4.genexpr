@@ -1,0 +1,13 @@
+pan = wrap(in2) * 4;
+pan_int = int(pan);
+panloc = (pan - pan_int) * HALFPI;
+
+sig1 = in1 * fastcos(panloc);
+sig2 = in1 * fastsin(panloc);
+outgate = pan_int + 1;
+
+out1a, out2a, out3a, out4a = gate(outgate, sig1, choices=4);
+out2b, out3b, out4b, out1b = gate(outgate, sig2, choices=4);
+
+out1, out2, out3, out4 = out1a+out1b, out2a+out2b, 
+	out3a+out3b, out4a+out4b;

@@ -1,0 +1,135 @@
+{
+	"patcher" : 	{
+		"fileversion" : 1,
+		"appversion" : 		{
+			"major" : 8,
+			"minor" : 0,
+			"revision" : 1,
+			"architecture" : "x64",
+			"modernui" : 1
+		}
+,
+		"classnamespace" : "dsp.gen",
+		"rect" : [ 548.0, 78.0, 600.0, 450.0 ],
+		"bglocked" : 0,
+		"openinpresentation" : 0,
+		"default_fontsize" : 12.0,
+		"default_fontface" : 0,
+		"default_fontname" : "Arial",
+		"gridonopen" : 1,
+		"gridsize" : [ 15.0, 15.0 ],
+		"gridsnaponopen" : 1,
+		"objectsnaponopen" : 1,
+		"statusbarvisible" : 2,
+		"toolbarvisible" : 1,
+		"lefttoolbarpinned" : 0,
+		"toptoolbarpinned" : 0,
+		"righttoolbarpinned" : 0,
+		"bottomtoolbarpinned" : 0,
+		"toolbars_unpinned_last_save" : 0,
+		"tallnewobj" : 0,
+		"boxanimatetime" : 200,
+		"enablehscroll" : 1,
+		"enablevscroll" : 1,
+		"devicewidth" : 0.0,
+		"description" : "",
+		"digest" : "",
+		"tags" : "moog, filter, ladder",
+		"style" : "",
+		"subpatcher_template" : "",
+		"title" : "Simple MoogFF",
+		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-9",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 454.0, 8.0, 119.0, 22.0 ],
+					"text" : "in 3 @comment gain"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"code" : "// MoogFF \r\n// by Frederico Fontana (2007)\r\n// SuperCollider port by Dan Stowell\r\n// simplified gen~ port by Andrzej Kopeć (2018)\r\n\r\nHistory s1(0), s2(0), s3(0), s4(0), _last_freq(0);\r\nHistory a1(0.), b0(0);\r\nsampledur = 1 / samplerate;\r\nfreq = in2;\r\n\r\nk = clamp(in3, 0, 4);// k = gain (0.-4.)\r\n\r\n// coeff calculation\r\nif (_last_freq != freq) {\r\n\tt = sampledur;\r\n\twcd = 2 * tan(t * PI * freq) * samplerate;\r\n\tif (wcd<0) wcd = 0;\r\n\ttwcd = t*wcd;\r\n\tb0 = twcd/(twcd + 2);\r\n\ta1 = (twcd - 2)/(twcd + 2);\r\n\t_last_freq = freq;\r\n}\r\n\r\n// main\r\no = s4 + b0*(s3 + b0*(s2 + b0*s1));\r\n\r\nouts = (b0*b0*b0*b0*in1 + o) / (1 + b0*b0*b0*b0*k);\r\n\r\nu = in1 - k*outs;\r\n\r\n// upd. 1st ord. filter states\r\npast = u;\r\nfuture = b0*past + s1;\r\ns1 = b0*past - a1*future;\r\n\r\npast = future;\r\nfuture = b0*past + s2;\r\ns2 = b0*past - a1*future;\r\n\r\npast = future;\r\nfuture = b0*past + s3;\r\ns3 = b0*past - a1*future;\r\n\r\ns4 = b0*future - a1*outs;\r\n\r\nout1 = outs;",
+					"fontface" : 0,
+					"fontname" : "<Monospaced>",
+					"fontsize" : 12.0,
+					"id" : "obj-6",
+					"maxclass" : "codebox",
+					"numinlets" : 3,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 50.0, 46.0, 493.0, 389.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-1",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 50.0, 14.0, 28.0, 22.0 ],
+					"text" : "in 1"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-2",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 252.0, 4.0, 149.0, 22.0 ],
+					"text" : "in 2 @comment frequency"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-4",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 50.0, 451.0, 35.0, 22.0 ],
+					"text" : "out 1"
+				}
+
+			}
+ ],
+		"lines" : [ 			{
+				"patchline" : 				{
+					"destination" : [ "obj-6", 0 ],
+					"source" : [ "obj-1", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-6", 1 ],
+					"source" : [ "obj-2", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-4", 0 ],
+					"source" : [ "obj-6", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-6", 2 ],
+					"source" : [ "obj-9", 0 ]
+				}
+
+			}
+ ]
+	}
+
+}
