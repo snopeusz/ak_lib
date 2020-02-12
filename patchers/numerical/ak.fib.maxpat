@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 84.0, 128.0, 204.0, 480.0 ],
+		"rect" : [ 84.0, 128.0, 204.0, 431.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -38,6 +38,28 @@
 		"style" : "",
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-7",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 47.5, 18.0, 35.0, 20.0 ],
+					"text" : "next"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-6",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 82.0, 18.0, 35.0, 20.0 ],
+					"text" : "reset"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"id" : "obj-4",
 					"linecount" : 6,
@@ -123,7 +145,7 @@
 			}
 , 			{
 				"box" : 				{
-					"comment" : "",
+					"comment" : "(bang) next number",
 					"id" : "obj-68",
 					"index" : 1,
 					"maxclass" : "inlet",
@@ -136,7 +158,7 @@
 			}
 , 			{
 				"box" : 				{
-					"comment" : "",
+					"comment" : "(bang) reset generator",
 					"id" : "obj-69",
 					"index" : 2,
 					"maxclass" : "inlet",
